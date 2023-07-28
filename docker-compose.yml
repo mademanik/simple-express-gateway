@@ -1,0 +1,30 @@
+version: "3"
+services:
+
+  # Product Service
+  express-product:
+    container_name: express-product
+    build:
+      context: ./express-product
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - express-network
+
+  ##Gateway Service
+  express-gateway:
+    container_name: express-gateway
+    build:
+      context: ./express-gateway
+      dockerfile: Dockerfile
+    networks:
+      - express-network
+    ports:
+      - 8080:8080
+    depends_on:
+      - express-product
+  
+networks:
+  express-network:
+    driver: bridge

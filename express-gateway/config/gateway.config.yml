@@ -1,0 +1,22 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: express-gateway
+apiEndpoints:
+  product:              
+    host: 'express-product'
+    paths:
+      - '/api/product'
+serviceEndpoints:
+  product:                       
+    url: "http://express-product:3000"
+policies:
+  - proxy
+pipelines:
+  -
+        name: product
+        apiEndpoints:
+            - product
+        policies:
+            - {proxy: [{action: {serviceEndpoint: product}}]}
